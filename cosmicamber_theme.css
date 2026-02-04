@@ -87,7 +87,6 @@ html, body{
 /* =========================
    3) PANNEAUX “VERRE”
 ========================= */
-/* Cible large: la plupart des conteneurs Discord ont ces backgrounds */
 [class*="app_"],
 [class*="bg_"],
 [class*="layers_"],
