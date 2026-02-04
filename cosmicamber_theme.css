@@ -1,0 +1,178 @@
+/**
+ * @name Cosmic Amber (Vencord)
+ * @version 1.0.0
+ * @description Dark cosmic blue/violet + soft amber glow. Made for Vencord Custom CSS.
+ * @author YellowHex35
+ */
+
+/* =========================
+   1) VARIABLES 
+========================= */
+:root{
+  /* Background */
+  --cosmic-bg-image: url("/img/bg_nebula.jpg");
+  --cosmic-bg-blur: 0px;      /* blur of the wallpaper */
+
+  /* Palette */
+  --c-base: 10,12,18;         /* noir bleuté */
+  --c-panel: 14,18,28;        /* panneaux */
+  --c-panel-2: 12,16,24;      /* alt */
+  --c-stroke: 255,255,255;    /* pour bordures translucides */
+
+  --c-accent: 122,168,255;    /* bleu lumineux (liens, focus) */
+  --c-violet: 158,120,255;    /* violet cosmique */
+  --c-amber: 255,190,120;     /* ambre doux (glow) */
+
+  /* Intensités */
+  --panel-alpha: 0.72;        /* opacité des panneaux (0-1) */
+  --panel-blur: 10px;         /* blur "verre" */
+  --stroke-alpha: 0.10;       /* bordures */
+  --shadow-alpha: 0.35;       /* ombres */
+
+  /* Forme */
+  --radius: 14px;
+  --gap: 10px;
+}
+
+/* =========================
+   2) FOND GLOBAL
+========================= */
+html, body{
+  background: rgb(var(--c-base)) !important;
+}
+
+#app-mount{
+  position: relative;
+  background: radial-gradient(1200px 800px at 20% 10%, rgba(var(--c-violet),0.18), transparent 60%),
+              radial-gradient(900px 700px at 80% 30%, rgba(var(--c-accent),0.12), transparent 55%),
+              radial-gradient(900px 700px at 50% 90%, rgba(var(--c-amber),0.08), transparent 55%),
+              linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.75)) !important;
+}
+
+#app-mount::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    /* image optionnelle */
+    var(--cosmic-bg-image),
+    /* fallback si pas d’image */
+    radial-gradient(1200px 800px at 30% 20%, rgba(var(--c-violet),0.22), transparent 60%),
+    radial-gradient(900px 700px at 70% 35%, rgba(var(--c-accent),0.16), transparent 55%),
+    radial-gradient(900px 700px at 50% 85%, rgba(var(--c-amber),0.10), transparent 55%),
+    linear-gradient(180deg, rgb(var(--c-base)), rgb(var(--c-base)));
+  background-size: cover;
+  background-position: center;
+  filter: blur(var(--cosmic-bg-blur));
+  transform: scale(1.03);
+}
+
+/* Petite “poussière d’étoiles” subtile */
+#app-mount::after{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.25) 50%, transparent 55%),
+    radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.18) 50%, transparent 55%),
+    radial-gradient(1px 1px at 55% 35%, rgba(255,255,255,0.20) 50%, transparent 55%),
+    radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.16) 50%, transparent 55%),
+    radial-gradient(1px 1px at 90% 25%, rgba(255,255,255,0.12) 50%, transparent 55%);
+  opacity: 0.45;
+}
+
+/* =========================
+   3) PANNEAUX “VERRE”
+========================= */
+/* Cible large: la plupart des conteneurs Discord ont ces backgrounds */
+[class*="app_"],
+[class*="bg_"],
+[class*="layers_"],
+[class*="layer_"],
+[class*="container_"],
+[class*="chat_"],
+[class*="sidebar_"],
+[class*="content_"],
+[class*="membersWrap_"],
+[class*="nowPlayingColumn_"]{
+  background: transparent !important;
+}
+
+/* Panneaux principaux */
+[class*="sidebar_"],
+[class*="chat_"],
+[class*="membersWrap_"],
+[class*="nowPlayingColumn_"],
+[class*="content_"]{
+  background: rgba(var(--c-panel), var(--panel-alpha)) !important;
+  backdrop-filter: blur(var(--panel-blur));
+  border: 1px solid rgba(var(--c-stroke), var(--stroke-alpha));
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0,0,0,var(--shadow-alpha));
+  margin: var(--gap);
+  overflow: hidden;
+}
+
+/* =========================
+   4) POPOUTS / MENUS / MODALS
+========================= */
+[class*="menu_"],
+[class*="popout_"],
+[class*="autocomplete_"],
+[class*="modal_"],
+[class*="layerContainer_"] [class*="container_"]{
+  background: rgba(var(--c-panel-2), 0.82) !important;
+  backdrop-filter: blur(calc(var(--panel-blur) + 4px));
+  border: 1px solid rgba(var(--c-stroke), 0.12);
+  border-radius: calc(var(--radius) + 2px);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+}
+
+/* =========================
+   5) ACCENTS (liens, focus, boutons)
+========================= */
+a, [class*="anchor_"]{
+  color: rgb(var(--c-accent)) !important;
+}
+
+[class*="button_"][class*="lookFilled_"]{
+  background: rgba(var(--c-accent), 0.18) !important;
+  border: 1px solid rgba(var(--c-accent), 0.25) !important;
+}
+
+[class*="button_"][class*="lookFilled_"]:hover{
+  background: rgba(var(--c-accent), 0.24) !important;
+}
+
+/* Glow ambre très subtil sur éléments interactifs */
+[class*="button_"]:hover,
+[class*="clickable_"]:hover{
+  box-shadow: 0 0 0 1px rgba(var(--c-amber),0.10), 0 10px 30px rgba(var(--c-amber),0.06);
+}
+
+/* =========================
+   6) BARRE DE TEXTE (input)
+========================= */
+[class*="channelTextArea_"]{
+  background: rgba(var(--c-panel-2), 0.70) !important;
+  border: 1px solid rgba(var(--c-stroke), 0.10) !important;
+  border-radius: calc(var(--radius) + 2px);
+  backdrop-filter: blur(var(--panel-blur));
+}
+
+/* =========================
+   7) SCROLLBAR
+========================= */
+::-webkit-scrollbar{
+  width: 10px;
+}
+::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover{
+  background: rgba(255,255,255,0.12);
+}
