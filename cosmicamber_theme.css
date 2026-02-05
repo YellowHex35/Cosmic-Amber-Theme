@@ -10,7 +10,7 @@
 ========================= */
 :root{
   /* Background */
-  --cosmic-bg-image: url("/img/bg_nebula.jpg");
+  --cosmic-bg-image: url("https://github.com/YellowHex35/Cosmic-Amber-Theme/blob/main/img/bg_nebula.jpg");
   --cosmic-bg-blur: 0px;      /* blur of the wallpaper */
 
   /* Palette */
